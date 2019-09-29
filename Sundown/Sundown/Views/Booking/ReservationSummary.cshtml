@@ -1,0 +1,54 @@
+﻿@model Sundown.ViewModels.ReservationViewModel
+
+@{
+    ViewData["Title"] = "Reservation Summary";
+}
+@using (Html.BeginForm("ConfirmReservation", "Booking"))
+{
+
+    @Html.HiddenFor(model => model.User)
+    @Html.HiddenFor(model => model.ReservationDate)
+    @Html.HiddenFor(model => model.GuestAmount)
+    @Html.HiddenFor(model => model.Menu)
+    @Html.HiddenFor(model => model.Drink)
+
+    <div class="text-center option">
+        <h1 class="display-4">Table Booking</h1>
+    </div>
+
+    <div class="text-center option">
+        <p>Review and confirm your reservation.</p>
+    </div>
+
+    <div class="text-center option">
+        <div id="summary" class="text-left" data-request-url="@Url.Action("GetTimeSlots", "Booking")">
+            <b><label>Email</label></b><br />
+            <label>@Model.User</label><br />
+            <b><label>Reservation Time</label></b><br />
+            <label>@Model.ReservationDate</label><br />
+            <b><label>Number of guests</label></b><br />
+            <label>@Model.GuestAmount</label><br />
+            <b><label>Menu</label></b><br />
+            <label>@Model.Menu</label><br />
+            <b><label>Drink</label></b><br />
+            <label>@Model.Drink</label><br />
+        </div>
+    </div>
+
+    <div style="display:inline;width:100%;">
+        <center>
+            <a id="btn_back" style="width:100px;cursor:pointer" class="btn btn-outline-secondary" data-request-url="@Url.Action("Reservation", "Booking")">Back</a>
+            <input type="submit" style="width:200px;" id="btn_confirm" class="btn btn-outline-success" value="Confirm Reservation" />
+        </center>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#btn_back").click(function () {
+                window.location.href = $("#btn_back").data("request-url");
+            });
+        });
+    </script>
+}

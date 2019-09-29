@@ -1,0 +1,60 @@
+﻿@model Sundown.ViewModels.ReservationViewModel
+
+@{
+    ViewData["Title"] = "Table Booking";
+}
+@using (Html.BeginForm("ReservationSummary", "Booking"))
+{
+    @Html.HiddenFor(model => model.ReservationDate)
+    @Html.HiddenFor(model => model.Menu)
+
+    <div class="text-center option">
+        <h1 class="display-4">Table Booking</h1>
+    </div>
+
+    <div id="flow_when">
+        <div class="text-center option">
+            <p>Table for how many guests?</p>
+            @Html.DropDownListFor(m => m.GuestAmount, Model.GuestAmountList, "-Select Amount-", new { @id = "guestpicker" })
+        </div>
+
+        <div id="calendar-container" class="text-center option hidden">
+            <p>Which date would you like to visit?</p>
+            <div id="calendar" class="text-center"></div>
+        </div>
+
+        <div id="timeslot-container" class="text-center option hidden">
+            <p>Which time would you like to reserve a table?</p>
+            <div id="timeslot" class="text-center" data-request-url="@Url.Action("GetTimeSlots", "Booking")"></div>
+        </div>
+    </div>
+    <div id="flow_how" class="hidden">
+        <div id="menu-container" class="text-center option">
+            <p>The chef's specialty of the evening is @Model.Menu.</p>
+            <p>Please select a drink to accompany your meal.</p>
+            @Html.DropDownListFor(m => m.Drink, Model.DrinksList, "-Select Drink-", new { @id = "drinkpicker" })
+        </div>
+
+        <div id="user-container" class="text-center option hidden">
+            <p id="summery"></p>
+            <p>Enter your email to complete the reservation.</p>
+            <div id="mail">@Html.TextBoxFor(m => m.User, new { id = "mail_input", @class = "form-control", @style = "width:30%;display:inline;" })</div>
+        </div>
+
+    </div>
+    <div style="display:inline;width:100%;">
+        <center>
+                <a id="btn_back" style="width:100px;cursor:pointer" class="btn btn-outline-secondary hidden" data-request-url="@Url.Action("Reservation", "Booking")">Back</a>
+            <input type="submit" style="width:100px;" id="btn_confirm" disabled="true" class="btn btn-outline-success hidden" value="Next" />
+        </center>
+    </div>
+}
+
+<div id="summary" data-request-url="@Url.Action("ReservationSummary", "Booking")">
+
+</div>
+
+@section Scripts{
+    <script src="~/js/createReservation.js" asp-append-version="true"></script>
+}
+

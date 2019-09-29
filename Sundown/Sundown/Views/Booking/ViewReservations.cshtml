@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "View Reservations";
+    List<Reservation> reservations = ViewBag.reservations as List<Reservation>;
+}
+
+<h1>Reservations</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <b>Email</b>
+        </div>
+        <div class="col-sm">
+            <b>Reservation Time</b>
+        </div>
+        <div class="col-sm">
+            <b>Guests</b>
+        </div>
+        <div class="col-sm">
+            <b>Menu</b>
+        </div>
+        <div class="col-sm">
+            <b>Drink</b>
+        </div>
+        <div class="col-sm">
+            <b>Action</b>
+        </div>
+    </div>
+    @foreach (Reservation reservation in reservations)
+    {
+        <div class="row">
+            <div class="col-sm">
+                @reservation.BookingUser
+            </div>
+            <div class="col-sm">
+                @reservation.ReservationTime
+            </div>
+            <div class="col-sm">
+                @reservation.GuestAmount
+            </div>
+            <div class="col-sm">
+                @reservation.Menu
+            </div>
+            <div class="col-sm">
+                @reservation.Drink
+            </div>
+            <div class="col-sm">
+                @Html.ActionLink("Remove reservation", "Remove", "Booking", new { Id = @reservation.ReservationId })
+            </div>
+        </div>
+    }
+</div>
+
